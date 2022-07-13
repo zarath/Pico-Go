@@ -2,7 +2,7 @@ const Activator = require('./lib/activator.js').default;
 const vscode = require('vscode');
 const os = require('os');
 const _ = require('lodash');
-const pkg = vscode.extensions.getExtension('chriswood.pico-go').packageJSON;
+const pkg = vscode.extensions.getExtension('drincann.pico-go').packageJSON;
 
 let view = null;
 

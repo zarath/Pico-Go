@@ -8,7 +8,7 @@ import Logger from '../helpers/logger.js';
 import EventEmitter from 'events';
 import _ from 'lodash';
 
-const pkg = vscode.extensions.getExtension('chriswood.pico-go').packageJSON;
+const pkg = vscode.extensions.getExtension('drincann.pico-go').packageJSON;
 
 export default class PanelView extends EventEmitter {
   constructor(pyboard, settings) {
@@ -36,7 +36,7 @@ export default class PanelView extends EventEmitter {
 
     this._setTitle('not connected');
     // terminal logic
-    let onTermConnect = function(err) {
+    let onTermConnect = function (err) {
       _this.emit('term-connected', err);
     };
 
@@ -45,8 +45,8 @@ export default class PanelView extends EventEmitter {
     // create terminal
     this.terminal = new Term(this.board, _this.settings);
     await this.terminal.initialize(onTermConnect);
-    
-    this.terminal.setOnMessageListener(function(input) {
+
+    this.terminal.setOnMessageListener(function (input) {
       _this.emit('user_input', input);
     });
   }
@@ -70,7 +70,7 @@ export default class PanelView extends EventEmitter {
       placeHolder: 'Select Action'
     };
 
-    window.showQuickPick(items, options).then(function(selection) {
+    window.showQuickPick(items, options).then(function (selection) {
       if (typeof selection === 'undefined') {
         return;
       }
