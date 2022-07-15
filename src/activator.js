@@ -9,7 +9,7 @@ import Pymakr from './pymakr';
 import Pyboard from './board/pyboard';
 import StubsManager from './stubs/stubs-manager';
 
-const pkg = vscode.extensions.getExtension('chriswood.pico-go').packageJSON;
+const pkg = vscode.extensions.getExtension('drincann.pico-go').packageJSON;
 
 export default class Activator {
   async activate(context) {
@@ -20,9 +20,9 @@ export default class Activator {
     await this._checkPythonVersion(sw);
 
     if (sw.detectedPythonPath == undefined) {
-      for(let item of pkg.contributes.commands) {
+      for (let item of pkg.contributes.commands) {
         let disposable = vscode.commands.registerCommand(item.command,
-          function() {
+          function () {
             vscode.window.showErrorMessage('Pico-Go was unable to start, most likely because Python wasn\'t found on your machine.');
           });
         context.subscriptions.push(disposable);
@@ -33,7 +33,7 @@ export default class Activator {
         null,
         'OK', 'Global Settings'
       );
-      
+
       if (choice == 'Global Settings')
         await sw.api.openSettings();
       return;
@@ -52,7 +52,7 @@ export default class Activator {
     let terminal = v.terminal;
 
     let disposable = vscode.commands.registerCommand('picogo.help',
-      function() {
+      function () {
         terminal.show();
         vscode.env.openExternal(vscode.Uri.parse(
           'http://pico-go.net/docs/start/quick/'));
@@ -60,82 +60,82 @@ export default class Activator {
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.listCommands',
-      function() {
+      function () {
         v.showQuickPick();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.initialise',
-      function() {
+      function () {
         sm.addToWorkspace();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.connect',
-      async function() {
+      async function () {
         terminal.show();
         await pymakr.connect();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.run',
-      async function() {
+      async function () {
         terminal.show();
         await pymakr.run();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.runselection',
-      async function() {
+      async function () {
         terminal.show();
         await pymakr.runSelection();
       });
     context.subscriptions.push(disposable);
 
-    disposable = vscode.commands.registerCommand('picogo.upload', function() {
+    disposable = vscode.commands.registerCommand('picogo.upload', function () {
       terminal.show();
       pymakr.upload();
     });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.uploadFile',
-      function() {
+      function () {
         terminal.show();
         pymakr.uploadFile();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.download',
-      async function() {
+      async function () {
         terminal.show();
         await pymakr.download();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.deleteAllFiles',
-      function() {
+      function () {
         terminal.show();
 
-        setTimeout(async function() {
+        setTimeout(async function () {
           await pymakr.deleteAllFiles();
         }, 500);
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.globalSettings',
-      async function() {
+      async function () {
         await pymakr.openGlobalSettings();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.disconnect',
-      async function() {
+      async function () {
         await pymakr.disconnect();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.toggleConnect',
-      async function() {
+      async function () {
         if (!pymakr.board.connected) {
           terminal.show();
         }
@@ -144,7 +144,7 @@ export default class Activator {
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.ftp',
-      async function() {
+      async function () {
         if (!pymakr.board.connected) {
           terminal.show();
         }
@@ -153,15 +153,15 @@ export default class Activator {
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.extra.pins',
-      function() {
+      function () {
         const panel = vscode.window.createWebviewPanel(
           'pins',
           'Pico Pin Map',
           vscode.ViewColumn.Active, {
-            // Only allow the webview to access resources in our extension's media directory
-            localResourceRoots: [vscode.Uri.file(path.join(context
-              .extensionPath, 'images'))]
-          }
+          // Only allow the webview to access resources in our extension's media directory
+          localResourceRoots: [vscode.Uri.file(path.join(context
+            .extensionPath, 'images'))]
+        }
         );
 
         const onDiskPath = vscode.Uri.file(
@@ -174,42 +174,42 @@ export default class Activator {
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand(
-      'picogo.extra.getFullVersion', async function() {
+      'picogo.extra.getFullVersion', async function () {
         terminal.show();
         await pymakr.getFullVersion();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.extra.getSerial',
-      async function() {
+      async function () {
         terminal.show();
         await pymakr.getSerial();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.reset.soft',
-      async function() {
+      async function () {
         terminal.show();
         await pymakr.resetSoft();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.reset.hard',
-      async function() {
+      async function () {
         terminal.show();
         await pymakr.resetHard();
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.universalStop',
-      async function() {
+      async function () {
         if (v.stopAction != undefined)
           vscode.commands.executeCommand(v.stopAction);
       });
     context.subscriptions.push(disposable);
 
     disposable = vscode.commands.registerCommand('picogo.extra.firmwareUpdates',
-      async function() {
+      async function () {
         await pymakr.checkForFirmwareUpdates();
       });
     context.subscriptions.push(disposable);
@@ -220,12 +220,12 @@ export default class Activator {
   async _checkPythonVersion(sw) {
     let executables = [sw.python_path, 'py.exe', 'python3.exe', 'python3', 'python'];
 
-    for(let executable of executables) {
+    for (let executable of executables) {
       if (executable != undefined) {
         let result = await this._tryPython(executable);
         let match = /Python (?<major>[0-9]+)\.[0-9]+\.[0-9]+/gm.exec(result);
 
-        if (match != undefined && parseInt(match.groups.major) >= 3){
+        if (match != undefined && parseInt(match.groups.major) >= 3) {
           sw.detectedPythonPath = executable;
           return;
         }

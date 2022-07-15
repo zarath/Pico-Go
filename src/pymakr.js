@@ -292,7 +292,7 @@ export default class Pymakr extends EventEmitter {
     let command =
       'import os; ' +
       'print("\\r\\n"); ' +
-      `print("Pico-Go:      ${vscode.extensions.getExtension('chriswood.pico-go').packageJSON.version}"); ` +
+      `print("Pico-Go:      ${vscode.extensions.getExtension('drincann.pico-go').packageJSON.version}"); ` +
       `print("VS Code:      ${vscode.version}"); ` +
       `print("Electron:     ${process.versions.electron}"); ` +
       `print("Modules:      ${process.versions.modules}"); ` +

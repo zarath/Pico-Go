@@ -3,9 +3,9 @@
   "displayName": "Pico-Go",
   "description": "Autocompletion and a REPL console for the Raspberry Pi Pico.",
   "version": "1.4.3",
-  "publisher": "ChrisWood",
+  "publisher": "Drincann",
   "homepage": "http://pico-go.net/",
-  "repository": "https://github.com/cpwood/Pico-Go",
+  "repository": "https://github.com/Drincann/Pico-Go",
   "icon": "images/logo.png",
   "license": "SEE LICENSE IN <LICENSE.md>",
   "galleryBanner": {
